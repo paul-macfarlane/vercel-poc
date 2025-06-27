@@ -1,12 +1,17 @@
 import express from "express";
-import cors from "cors";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 const app = express();
 
-app.use(cors());
+// Enable CORS in development only
+if (process.env.NODE_ENV !== "production") {
+  const cors = require("cors");
+  app.use(cors());
+  console.log("CORS enabled in development mode");
+}
+
 app.use(express.json());
 
 app.get("/api/hello", (req, res) => {
